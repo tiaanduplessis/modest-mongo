@@ -48,7 +48,6 @@
   <summary>Table of Contents</summary>
   <li><a href="#install">Install</a></li>
   <li><a href="#usage">Usage</a></li>
-  <li><a href="#api">API</a></li>
   <li><a href="#contribute">Contribute</a></li>
   <li><a href="#license">License</a></li>
 </details>
@@ -60,19 +59,39 @@ $ npm install modest-mongo
 # OR
 $ yarn add modest-mongo
 ```
-
 ## Usage
+
+After requiring `modest-mongo`, create a new client instance:
 
 ```js
 const Client = require('modest-mongo')
 
-const mongo = new Client({ db: 'example' })
-const dudes = mongo.collection('dudes')
+// Create new new client instance
+const mongoClient = new Client({ db: 'example' })
+```
+
+`Client` accepts an `object` or url `string` possible object properties are:
+
+- **`host`** (optional, defaults to `127.0.0.1`)
+- **`port`** (optional, default to `27017`)
+- **`db`** (required)
+
+After a client is created, you can create a new collection:
+
+```js
+const dudes = mongoClient.collection('dudes')
+
+// Some example data
 
 const dude = { name: 'Tiaan', surname: 'du Plessis' }
 const otherDude = { name: 'Evan', surname: 'du Plessis' }
 const anotherDude = { name: 'Paul', surname: 'du Plessis' }
+```
 
+The collection instance returned then allows you to `find`, `save`, `count`, `update` and `remove` documents in the collection. For example
+
+
+```js
 // Save
 dudes
   .save(dude)
@@ -108,8 +127,6 @@ dudes.remove({ name: 'Evan' }).then(console.log).catch(console.log)
 // dudes.remove().then(console.log).catch(console.log)
 
 ```
-
-## API - TODO
 
 ## Contributing
 

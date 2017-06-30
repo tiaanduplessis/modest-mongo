@@ -24,7 +24,10 @@ class Client {
       throw new Error('URL for Mongo connection is not valid')
     }
   }
-
+  /**
+ * Get a collection of specified name
+ * @param {String} name of the collection
+ */
   collection (name) {
     if (!is(name, 'String')) {
       throw new Error('Name of collection must be string')
@@ -33,6 +36,10 @@ class Client {
     return new Collection(this, name)
   }
 
+  /**
+ * Open connection to db and return collection of provided name
+ * @param {String} name of collection
+ */
   open (name) {
     if (this.db) {
       return Promise.resolve(this.db.collection(name))
@@ -50,6 +57,9 @@ class Client {
     })
   }
 
+  /**
+   * Close the connection to database
+   */
   close () {
     if (this.db) {
       this.db.close()
@@ -66,7 +76,11 @@ class Collection {
     this.client = client
     this.name = name
   }
-
+  /**
+   * Find document in the collection
+   * @param {Object|String} doc to find
+   * @param {Object} options for find
+   */
   find (doc, options = {}) {
     if (is(doc, 'String')) {
       doc = { _id: doc }
@@ -75,15 +89,16 @@ class Collection {
     return this.client.open(this.name).then(collection => {
       return new Promise((resolve, reject) => {
         const { fields, limit, skip, sort } = options
-        const subset = fields && Array.isArray(fields)
-          ? options.fields.reduce((fields, current) => {
-            if (is(current, 'String')) {
-              fields[current] = 1
-            }
+        const subset =
+          fields && Array.isArray(fields)
+            ? options.fields.reduce((fields, current) => {
+              if (is(current, 'String')) {
+                fields[current] = 1
+              }
 
-            return fields
-          }, {})
-          : {}
+              return fields
+            }, {})
+            : {}
 
         let cursor = collection.find(doc, subset)
 
@@ -109,7 +124,10 @@ class Collection {
       })
     })
   }
-
+  /**
+ * Save docment(s) to the collection
+ * @param {Object|Array} doc to save
+ */
   save (doc) {
     return this.client.open(this.name).then(collection => {
       if (Array.isArray(doc)) {
@@ -140,11 +158,11 @@ class Collection {
     })
   }
 
+  /**
+ * Count the number of documents in a collection
+ * @param {Object} doc to count
+ */
   count (doc) {
-    if (is(doc, 'String')) {
-      doc = { _id: doc }
-    }
-
     return this.client.open(this.name).then(collection => {
       return new Promise((resolve, reject) => {
         collection.count(doc, (error, response) => {
@@ -158,6 +176,12 @@ class Collection {
     })
   }
 
+  /**
+   * Update a document with provided data
+   * @param {Object|String} doc to update
+   * @param {Object} data to update document with
+   * @param {Object} options to pass to update method
+   */
   update (doc, data, options = {}) {
     if (is(doc, 'String')) {
       doc = { _id: doc }
@@ -175,7 +199,10 @@ class Collection {
       })
     })
   }
-
+  /**
+ * Remove specified document from collection
+ * @param {Object|String} doc to remove from collection
+ */
   remove (doc) {
     if (is(doc, 'String')) {
       doc = { _id: doc }
