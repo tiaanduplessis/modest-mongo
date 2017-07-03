@@ -1,4 +1,4 @@
-const Client = require('../')
+const Client = require('../src/')
 
 test('should be new client', () => {
   expect(Client).toBeDefined()

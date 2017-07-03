@@ -3,6 +3,14 @@
 const { MongoClient } = require('mongodb')
 const is = require('samesame')
 
+/**
+ * Client connected to MongoDB
+ *
+ * @example
+ * const client = new Client({db: 'example'})
+ *
+ * @param {object} options for the new connection
+ */
 class Client {
   constructor (options = {}) {
     if (is(options, 'String')) {
@@ -24,9 +32,15 @@ class Client {
       throw new Error('URL for Mongo connection is not valid')
     }
   }
+
   /**
- * Get a collection of specified name
- * @param {String} name of the collection
+ * Create a new collection instance of the given name
+ *
+ * @example
+ * const collection = client.collection('foo')
+ *
+ * @param {string} name of the collection
+ *
  */
   collection (name) {
     if (!is(name, 'String')) {
@@ -38,7 +52,10 @@ class Client {
 
   /**
  * Open connection to db and return collection of provided name
- * @param {String} name of collection
+ *
+ * @param {string} name of the collection to open up connection to in db
+ *
+ * @returns {Promise} collection instance
  */
   open (name) {
     if (this.db) {
@@ -59,6 +76,11 @@ class Client {
 
   /**
    * Close the connection to database
+   *
+   * @example
+   * client.close()
+   *
+   * @returns {boolean} success of closing the connection
    */
   close () {
     if (this.db) {
@@ -71,15 +93,20 @@ class Client {
   }
 }
 
+/**
+ * Represents a a collection in MongoDB
+ */
 class Collection {
   constructor (client, name) {
     this.client = client
     this.name = name
   }
+
   /**
    * Find document in the collection
-   * @param {Object|String} doc to find
-   * @param {Object} options for find
+   *
+   * @param {object|string} doc to find
+   * @param {object} options for find
    */
   find (doc, options = {}) {
     if (is(doc, 'String')) {
@@ -126,7 +153,8 @@ class Collection {
   }
   /**
  * Save docment(s) to the collection
- * @param {Object|Array} doc to save
+ *
+ * @param {object|array} doc to save
  */
   save (doc) {
     return this.client.open(this.name).then(collection => {
@@ -160,7 +188,8 @@ class Collection {
 
   /**
  * Count the number of documents in a collection
- * @param {Object} doc to count
+ *
+ * @param {object} doc to count
  */
   count (doc) {
     return this.client.open(this.name).then(collection => {
@@ -178,9 +207,9 @@ class Collection {
 
   /**
    * Update a document with provided data
-   * @param {Object|String} doc to update
-   * @param {Object} data to update document with
-   * @param {Object} options to pass to update method
+   * @param {object|string} doc to update
+   * @param {object} data to update document with
+   * @param {object} options to pass to update method
    */
   update (doc, data, options = {}) {
     if (is(doc, 'String')) {
@@ -201,7 +230,8 @@ class Collection {
   }
   /**
  * Remove specified document from collection
- * @param {Object|String} doc to remove from collection
+ *
+ * @param {object|string} doc to remove from collection
  */
   remove (doc) {
     if (is(doc, 'String')) {
