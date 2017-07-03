@@ -1,6 +1,6 @@
 {
   "name": "modest-mongo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Modest MongoDB API wrapper",
   "license": "MIT",
   "repository": {
@@ -10,7 +10,9 @@
   "homepage": "https://github.com/tiaanduplessis/modest-mongo",
   "bugs": "https://github.com/tiaanduplessis/modest-mongo",
   "main": "src/index.js",
-  "files": ["src/index.js"],
+  "files": [
+    "src/index.js"
+  ],
   "scripts": {
     "test": "jest",
     "lint": "standard src/**",
