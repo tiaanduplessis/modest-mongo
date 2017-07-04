@@ -2,9 +2,10 @@
 
 const { MongoClient } = require('mongodb')
 const is = require('samesame')
+const validate = require('obj-validate')
 
 /**
- * Client connected to MongoDB
+ * Client to connect to MongoDB
  *
  * @example
  * const client = new Client({db: 'example'})
@@ -151,29 +152,21 @@ class Collection {
       })
     })
   }
+
   /**
  * Save docment(s) to the collection
  *
- * @param {object|array} doc to save
+ * @param {object} doc Document to save to collection
  */
-  save (doc) {
-    return this.client.open(this.name).then(collection => {
-      if (Array.isArray(doc)) {
-        return Promise.all(
-          doc.map(doc => {
-            return new Promise((resolve, reject) => {
-              collection.save(doc, (error, response) => {
-                if (error) {
-                  return reject(error)
-                }
-
-                return resolve(response && response.result.n > 0 ? response.ops : [])
-              })
-            })
-          })
-        )
+  save (doc, options = {}) {
+    if (options.schema) {
+      const errors = validate(doc, options.schema)
+      if (errors.length) {
+        return Promise.reject(errors[0])
       }
+    }
 
+    return this.client.open(this.name).then(collection => {
       return new Promise((resolve, reject) => {
         collection.save(doc, (error, response) => {
           if (error) {
@@ -214,6 +207,14 @@ class Collection {
   update (doc, data, options = {}) {
     if (is(doc, 'String')) {
       doc = { _id: doc }
+    }
+
+    if (options.schema) {
+      const errors = validate(doc, options.schema)
+      if (errors.length) {
+        return Promise.reject(errors[0])
+      }
+      delete options.schema
     }
 
     return this.client.open(this.name).then(collection => {

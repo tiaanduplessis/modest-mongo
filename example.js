@@ -17,7 +17,7 @@ dudes
     dudes.update(id, { surname: 'Du Plessis' }).then(console.log).catch(console.log)
   })
   .catch(console.log)
-dudes.save([otherDude, anotherDude]).then(console.log).catch(console.log)
+dudes.save(otherDude).then(console.log).catch(console.log)
 
 // Find
 dudes.find({ name: 'Tiaan' }).then(console.log).catch(console.log)
