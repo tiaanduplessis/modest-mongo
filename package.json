@@ -10,7 +10,9 @@
   "homepage": "https://github.com/tiaanduplessis/modest-mongo",
   "bugs": "https://github.com/tiaanduplessis/modest-mongo",
   "main": "src/index.js",
-  "files": ["src/index.js"],
+  "files": [
+    "src/index.js"
+  ],
   "scripts": {
     "test": "jest",
     "format": "prettier-standard src/**",
@@ -23,6 +25,7 @@
   },
   "author": "tiaanduplessis <tiaanduplessis@hotmail.com>",
   "devDependencies": {
+    "documentation": "^4.0.0-rc.1",
     "husky": "^0.14.1",
     "jest": "^20.0.4",
     "prettier-standard": "^6.0.0"
