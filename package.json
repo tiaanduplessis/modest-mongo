@@ -13,12 +13,11 @@
   "files": ["src/index.js"],
   "scripts": {
     "test": "jest",
-    "lint": "standard src/**",
-    "lint:fix": "npm run lint -- --fix",
+    "format": "prettier-standard src/**",
+    "format:fix": "npm run format -- --fix",
     "start": "npm run test",
     "docs": "documentation build src/** -f html -o docs",
-    "pretest": "npm run format && npm run lint:fix",
-    "format": "prettier --print-width 100 --semi false --single-quote --write src/**",
+    "pretest": "npm run format:fix",
     "precommit": "npm test",
     "release": "npm test && git commit -am $npm_package_version && git tag $npm_package_version && git push --tags && npm publish"
   },
@@ -26,8 +25,7 @@
   "devDependencies": {
     "husky": "^0.14.1",
     "jest": "^20.0.4",
-    "prettier": "~1.5.2",
-    "standard": "^10.0.2"
+    "prettier-standard": "^6.0.0"
   },
   "dependencies": {
     "mongodb": "^2.2.28",
