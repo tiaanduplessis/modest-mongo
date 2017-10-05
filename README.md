@@ -54,6 +54,8 @@
 
 ## Install
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/tiaanduplessis/modest-mongo.svg)](https://greenkeeper.io/)
+
 ```sh
 $ npm install modest-mongo
 # OR
