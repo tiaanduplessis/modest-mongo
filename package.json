@@ -25,7 +25,7 @@
   },
   "author": "tiaanduplessis <tiaanduplessis@hotmail.com>",
   "devDependencies": {
-    "documentation": "^5.3.2",
+    "documentation": "^11.0.0",
     "husky": "^0.14.1",
     "jest": "^21.2.1",
     "prettier-standard": "^7.0.1"
