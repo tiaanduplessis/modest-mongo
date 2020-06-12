@@ -33,6 +33,6 @@
   "dependencies": {
     "mongodb": "^3.2.4",
     "obj-validate": "^2.0.1",
-    "samesame": "^1.0.1"
+    "samesame": "^1.0.2"
   }
 }
